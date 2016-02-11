@@ -10,7 +10,7 @@ import uk.co.panaxiom.playjongo.PlayJongo;
 
 public class Tag {
 	public static MongoCollection tags() {
-        return PlayJongo.getCollection("Tags");
+        return PlayJongo.getCollection("tags");
     }
 
     @MongoId
