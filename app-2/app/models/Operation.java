@@ -31,8 +31,8 @@ public class Operation {
 
     public Operation(){
     	System.out.println("constructor by default");
-    	this.creationDate=LocalDateTime.now().toString();
-    	this.lastModified=this.creationDate;
+    	if(this.creationDate==null) this.creationDate=LocalDateTime.now().toString();
+    	this.lastModified=LocalDateTime.now().toString();
     }
     
     public Operation(String title, double amount){
@@ -62,19 +62,27 @@ public class Operation {
     	operations().remove(new ObjectId(operation.id));
     }
     
-    public static void updateTitle(String id, String newTitle){
+    public static void updateTitle(String id, Operation updatedOperation){
 //    	operations().update(new ObjectId(id)).with("{title:#, lastModified:#}", newTitle,LocalDateTime.now().toString());
-    	operations().update(new ObjectId(id)).with("{title:#}", newTitle);
+    	operations().update(new ObjectId(id)).with("{title:#}", updatedOperation.title);
     }
     
-    public static void updateAmount(String id, double newAmount){
+    public static void updateAmount(String id, Operation updatedOperation){
 //    	operations().update(new ObjectId(id)).with("{amount:#, lastModified:#}", newAmount, LocalDateTime.now().toString());
-    	operations().update(new ObjectId(id)).with("{amount:#}", newAmount);
+    	operations().update(new ObjectId(id)).with("{amount:#}", updatedOperation.amount);
     }
     
-    public static void updateCategory(String id, Category newCategory){
-//    	operations().update(new ObjectId(id)).with("{category:#, lastModified:#}", newCategory, LocalDateTime.now().toString());
-    	operations().update(new ObjectId(id)).with("{category:#}", newCategory);
+    public static void updateCategory(String id, Operation updatedOperation){
+    	operations().update(new ObjectId(id)).with("{category:#, lastModified:#}", updatedOperation.category, LocalDateTime.now().toString());
+//    	operations().update(new ObjectId(id)).with("{category:#}", newCategory);
+    }
+    
+    public static void update(String id, String field, String updatedField){
+    	operations().update(new ObjectId(id)).with("{"+field+":#}",updatedField);
+    }
+    
+    public static void update(String id, Operation updatedOperation){
+    	operations().update(new ObjectId(id)).with(updatedOperation);
     }
     
     public static void addTag(String id, Tag newTag){

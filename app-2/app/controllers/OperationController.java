@@ -66,25 +66,69 @@ public class OperationController extends Controller{
 		
 	}
 	
-	public Result updateTitle(String id, String title){
-		Operation.updateTitle(id, title);
-		return display(id);
+	public Result update(String id){
+		Result result=null;
+		Form<Operation> filledForm=operationForm.bindFromRequest();
+
+		
+		if (filledForm.hasErrors()) {			
+			result = badRequest();
+		} else {
+			Operation.update(id, filledForm.get());
+			result =  display(id);
+		}
+		
+		return result;
 	}
 	
-	public Result updateAmount(String id, String amount){
-		Double newAmount=Double.parseDouble(amount);
-		Operation.updateAmount(id, newAmount);
-		return display(id);
+	public Result updateTitle(String id){
+		Result result=null;
+		Form<Operation> filledForm=operationForm.bindFromRequest();
+
+		
+		if (filledForm.hasErrors()) {			
+			result = badRequest();
+		} else {
+			Operation.updateTitle(id, filledForm.get());
+			result =  display(id);
+		}
+		
+		return result;
 	}
 	
-	public Result addTag(String id, String title){
+	public Result updateAmount(String id){
+		Result result=null;
+		Form<Operation> filledForm=operationForm.bindFromRequest();
+
+		
+		if (filledForm.hasErrors()) {			
+			result = badRequest();
+		} else {
+			Operation.updateAmount(id, filledForm.get());
+			result =  display(id);
+		}
+		
+		return result;
+	}
+	
+	public Result addTag(String id){
 		return display(id);
 		//TODO
 	}
 	
-	public Result updateCategory(String id, String categoryTitle){
-		Operation.updateCategory(id, new Category(categoryTitle));
-		return display(id);
+	public Result updateCategory(String id){
+		Result result=null;
+		Form<Operation> filledForm=operationForm.bindFromRequest();
+
+		
+		if (filledForm.hasErrors()) {			
+			result = badRequest();
+		} else {
+			Operation.updateCategory(id, filledForm.get());
+			result =  display(id);
+		}
+		
+		return result;
 	}
 			
 	
