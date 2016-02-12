@@ -81,54 +81,9 @@ public class OperationController extends Controller{
 		return result;
 	}
 	
-	public Result updateTitle(String id){
-		Result result=null;
-		Form<Operation> filledForm=operationForm.bindFromRequest();
-
-		
-		if (filledForm.hasErrors()) {			
-			result = badRequest();
-		} else {
-			Operation.updateTitle(id, filledForm.get());
-			result =  display(id);
-		}
-		
-		return result;
-	}
-	
-	public Result updateAmount(String id){
-		Result result=null;
-		Form<Operation> filledForm=operationForm.bindFromRequest();
-
-		
-		if (filledForm.hasErrors()) {			
-			result = badRequest();
-		} else {
-			Operation.updateAmount(id, filledForm.get());
-			result =  display(id);
-		}
-		
-		return result;
-	}
-	
 	public Result addTag(String id){
 		return display(id);
 		//TODO
-	}
-	
-	public Result updateCategory(String id){
-		Result result=null;
-		Form<Operation> filledForm=operationForm.bindFromRequest();
-
-		
-		if (filledForm.hasErrors()) {			
-			result = badRequest();
-		} else {
-			Operation.updateCategory(id, filledForm.get());
-			result =  display(id);
-		}
-		
-		return result;
 	}
 			
 	

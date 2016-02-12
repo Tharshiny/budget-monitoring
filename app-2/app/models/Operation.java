@@ -23,15 +23,14 @@ public class Operation {
     public String id;
 
     public String title;
-    public double amount;
-    public String creationDate;
+    public Double amount;
+    public String creationDate=LocalDateTime.now().toString();
     public String lastModified;
     public Category category;
     public List<Tag> tags;
 
     public Operation(){
     	System.out.println("constructor by default");
-    	if(this.creationDate==null) this.creationDate=LocalDateTime.now().toString();
     	this.lastModified=LocalDateTime.now().toString();
     }
     
@@ -46,8 +45,7 @@ public class Operation {
     }
     
     public static void add(Operation operation) {
-    	
-    	System.out.println("add operation");
+    	System.out.println("add operation"); 
     	
         operations().insert(operation);
     }
@@ -60,32 +58,16 @@ public class Operation {
 
     public static void delete(Operation operation) {
     	operations().remove(new ObjectId(operation.id));
-    }
-    
-    public static void updateTitle(String id, Operation updatedOperation){
-//    	operations().update(new ObjectId(id)).with("{title:#, lastModified:#}", newTitle,LocalDateTime.now().toString());
-    	operations().update(new ObjectId(id)).with("{title:#}", updatedOperation.title);
-    }
-    
-    public static void updateAmount(String id, Operation updatedOperation){
-//    	operations().update(new ObjectId(id)).with("{amount:#, lastModified:#}", newAmount, LocalDateTime.now().toString());
-    	operations().update(new ObjectId(id)).with("{amount:#}", updatedOperation.amount);
-    }
-    
-    public static void updateCategory(String id, Operation updatedOperation){
-    	operations().update(new ObjectId(id)).with("{category:#, lastModified:#}", updatedOperation.category, LocalDateTime.now().toString());
-//    	operations().update(new ObjectId(id)).with("{category:#}", newCategory);
-    }
-    
-    public static void update(String id, String field, String updatedField){
-    	operations().update(new ObjectId(id)).with("{"+field+":#}",updatedField);
-    }
+    } 
     
     public static void update(String id, Operation updatedOperation){
+    	System.out.println("update operation with new elements");
+    	System.out.println(updatedOperation.toString());
+    	updatedOperation.creationDate=null;
     	operations().update(new ObjectId(id)).with(updatedOperation);
     }
-    
-    public static void addTag(String id, Tag newTag){
+
+	public static void addTag(String id, Tag newTag){
 //    	operations().update(new ObjectId(id)).with("{tag:#, lastModified:#}", newTag, LocalDateTime.now().toString());
     }
     
@@ -104,4 +86,11 @@ public class Operation {
     public static Operation findByTitle(String title) {
         return operations().findOne("{title:#}", title).as(Operation.class);
     }
+    
+    
+    @Override
+	public String toString() {
+		return "Operation [id=" + id + ", title=" + title + ", amount=" + amount + ", creationDate=" + creationDate
+				+ ", lastModified=" + lastModified + ", category=" + category + ", tags=" + tags + "]";
+	}
 }

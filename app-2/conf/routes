@@ -10,10 +10,8 @@ GET		/operation/:id						controllers.OperationController.display(id: String)
 GET		/operation/title/:title				controllers.OperationController.displaytitle(title: String)
 POST	/operation							controllers.OperationController.add()
 DELETE	/operation/:id						controllers.OperationController.delete(id: String)
-PUT		/operation/:id/title/:title			controllers.OperationController.updateTitle(id: String, title: String)
-PUT		/operation/:id/amount/:amount		controllers.OperationController.updateAmount(id: String, amount: String)
-PUT		/operation/:id/category/:category	controllers.OperationController.updateCategory(id: String, category: String)
-PUT		/operation/:id/tag/:tag				controllers.OperationController.addTag(id: String, tag: String)
+PUT		/operation/:id						controllers.OperationController.update(id: String)
+PUT		/operation/:id/tag					controllers.OperationController.addTag(id: String)
 
 # Category management
 GET		/categories							controllers.CategoryController.listAll()
