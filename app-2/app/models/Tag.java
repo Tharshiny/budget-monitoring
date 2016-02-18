@@ -26,11 +26,13 @@ public class Tag {
     }
     
     public static void create(Tag tag){
-    	tags().insert(tag);
+    	tag.title=tag.title.toLowerCase();
+    	if (!exist(tag.title)) tags().insert(tag);
     }
     
-    public static void create(String title){
-    	tags().insert(new Tag(title));
+	public static void create(String title){
+    	title=title.toLowerCase();
+    	if (!exist(title)) tags().insert(new Tag(title));
     }
     
     public static void delete(Tag tag){
@@ -44,4 +46,20 @@ public class Tag {
     public static Tag findById(String id) {
         return tags().findOne("{_id:#}", new ObjectId(id)).as(Tag.class);
     }
+    
+    public static Tag findByTitle(String title) {
+        return tags().findOne("{title:#}", title).as(Tag.class);
+    }
+    
+    private static boolean exist(String title){
+    	boolean exist=false;
+    	if (findByTitle(title)!=null) exist=true;
+    	return exist;
+    }
+    
+    @Override
+	public String toString() {
+		return "Tag [id=" + id + ", title=" + title + "]";
+	}
+
 }

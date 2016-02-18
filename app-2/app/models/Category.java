@@ -27,10 +27,12 @@ public class Category {
     }
     
     public static void create(Category category){
+    	category.title=category.title.toLowerCase();
     	if (!exist(category.title)) categories().insert(category);
     }
-    
-    public static void create(String title){
+
+	public static void create(String title){
+    	title=title.toLowerCase();
     	if (!exist(title)) categories().insert(new Category(title));
     }
     
@@ -56,4 +58,8 @@ public class Category {
     	categories().remove(new ObjectId(category.id));
     }
     
+    @Override
+	public String toString() {
+		return "Category [id=" + id + ", title=" + title + "]";
+	}
 }

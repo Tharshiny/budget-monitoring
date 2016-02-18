@@ -11,7 +11,7 @@ GET		/operation/title/:title				controllers.OperationController.displaytitle(tit
 POST	/operation							controllers.OperationController.add()
 DELETE	/operation/:id						controllers.OperationController.delete(id: String)
 PUT		/operation/:id						controllers.OperationController.update(id: String)
-PUT		/operation/:id/tag					controllers.OperationController.addTag(id: String)
+PUT		/operation/:id/tag/:tag					controllers.OperationController.addTag(id: String, tag: String)
 
 # Category management
 GET		/categories							controllers.CategoryController.listAll()
