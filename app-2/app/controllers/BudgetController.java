@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Budget;
 import models.Operation;
 import models.Tag;
 import play.data.Form;
@@ -7,35 +8,35 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-public class OperationController extends Controller{
+public class BudgetController extends Controller{
 
-	static Form<Operation> operationForm=Form.form(Operation.class);
+	static Form<Budget> budgetForm=Form.form(Budget.class);
 
 	public Result add(){
-		Form<Operation> filledForm=operationForm.bindFromRequest();
+		Form<Budget> filledForm=budgetForm.bindFromRequest();
 		Result result=null;
 		if(filledForm.hasErrors()){
 			result=badRequest();
 		}else{
-			Operation.add(filledForm.get());
-			result=ok(Json.toJson(Operation.all()));
+			Budget.create(filledForm.get());
+			result=ok(Json.toJson(Budget.all()));
 		}	
 		return result;
 	}
 
 	public Result listAll(){
-		return ok(Json.toJson(Operation.all()));
+		return ok(Json.toJson(Budget.all()));
 	}
 
 	public Result display(String id){
 
-		Operation operation=Operation.findById(id);
+		Budget budget=Budget.findById(id);
 
 		Result result=null;
-		if(operation == null){
+		if(budget == null){
 			result=notFound();
 		}else{
-			result=ok(Json.toJson(operation));
+			result=ok(Json.toJson(budget));
 		}
 		return result;
 	}
@@ -43,22 +44,22 @@ public class OperationController extends Controller{
 	public Result displayTitle(String title){
 
 		Result result=null;
-		if(Operation.findByTitle(title) == null){
+		if(Budget.findByTitle(title) == null){
 			result=notFound();
 		}else{
-			result=ok(Json.toJson(Operation.findByTitle(title)));
+			result=ok(Json.toJson(Budget.findByTitle(title)));
 		}
 		return result;
 	}
 
 	public Result delete(String id){
-		Operation operation=Operation.findById(id);
+		Budget budget=Budget.findById(id);
 
 		Result result=null;
-		if(operation == null){
+		if(budget == null){
 			result=notFound();
 		}else{
-			Operation.delete(operation);
+			Budget.remove(budget);
 			result=ok(Json.toJson("deleted"));
 		}
 		return result;
@@ -67,27 +68,25 @@ public class OperationController extends Controller{
 
 	public Result update(String id){
 		Result result=null;
-		Form<Operation> filledForm=operationForm.bindFromRequest();
+		Form<Budget> filledForm=budgetForm.bindFromRequest();
 
 		if (filledForm.hasErrors()) {			
 			result = badRequest();
 		} else {
-			Operation.update(id, filledForm.get());
+			Budget.update(id, filledForm.get());
 			result =  display(id);
 		}
 
 		return result;
 	}
-
-	public Result addTag(String id, String tag){
-		if(!Operation.isTagAdded(id, tag)) Operation.addTag(id, tag);
+	public Result addOperation(String id, String operationId){
+		Budget.addOperation(id, Operation.findById(operationId));
 		return display(id);
 	}
 
-	public Result removeTag(String id, String tag){
-		Operation.removeTag(id, Tag.findByTitle(tag));
+	public Result removeOperation(String id, String operationId){
+		Budget.removeOperation(id, Operation.findById(operationId));
 		return display(id);
 	}
-
 
 }

@@ -4,14 +4,20 @@
 
 # Home page
 
+# Authentication
+#GET     /bnp/homeTimeline 					controllers.BNP.homeTimeline()
+#GET     /bnp/auth         					controllers.BNP.auth()
+
+
 # Operation management
 GET		/operations							controllers.OperationController.listAll()
 GET		/operation/:id						controllers.OperationController.display(id: String)
-GET		/operation/title/:title				controllers.OperationController.displaytitle(title: String)
+GET		/operation/title/:title				controllers.OperationController.displayTitle(title: String)
 POST	/operation							controllers.OperationController.add()
 DELETE	/operation/:id						controllers.OperationController.delete(id: String)
 PUT		/operation/:id						controllers.OperationController.update(id: String)
-PUT		/operation/:id/tag/:tag					controllers.OperationController.addTag(id: String, tag: String)
+PUT		/operation/:id/tag/:tag				controllers.OperationController.addTag(id: String, tag: String)
+DELETE	/operation/:id/tag/:tag				controllers.OperationController.removeTag(id: String, tag: String)
 
 # Category management
 GET		/categories							controllers.CategoryController.listAll()
@@ -24,6 +30,16 @@ GET		/tags								controllers.TagController.listAll()
 GET		/tag/:id							controllers.TagController.display(id: String)
 POST	/tag								controllers.TagController.create()
 DELETE	/tag/:id							controllers.TagController.delete(id: String)
+
+# Budget management
+GET		/budgets							controllers.BudgetController.listAll()
+GET		/budget/:id							controllers.BudgetController.display(id: String)
+GET		/budget/title/:title				controllers.BudgetController.displayTitle(title: String)
+POST	/budget								controllers.BudgetController.add()
+DELETE	/budget/:id							controllers.BudgetController.delete(id: String)
+PUT		/budget/:id							controllers.BudgetController.update(id: String)
+PUT		/budget/:id/operation/:opId			controllers.BudgetController.addOperation(id: String, opId: String)
+DELETE	/budget/:id/operation/:opId			controllers.BudgetController.removeOperation(id: String, opId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
